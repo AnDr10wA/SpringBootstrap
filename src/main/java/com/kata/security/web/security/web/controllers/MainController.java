@@ -28,12 +28,13 @@ public class MainController   {
     public String homePage(){
         return "Welcom to home page";
     }
-    @GetMapping("/authenticated")
+    @GetMapping("/user")
     public String pageForAuthenticatedUsers(Principal principal){
         User user = userDetailServiceImpl.findByUsername(principal.getName());
 
 
-        return "secured part of web service your name is:  " + user.getUsername() + " : " +user.getEmail();
+        return "Username:  " + user.getUsername() + "</br>" + "Email : " +user.getEmail()+
+                "   " + "<a href='/logout'>Logout</a>";
     }
 
 

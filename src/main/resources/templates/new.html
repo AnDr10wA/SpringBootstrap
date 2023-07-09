@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        div.field {
+            padding-bottom: 5px;
+        }
+
+        div.field label {
+            display: block;
+            float: left;
+            width: 70px;
+            height: 15px;
+            text-align: center;
+        }
+
+    </style>
+    <title>Add new user</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+    <div class="field">
+        <label for="username">Enter name: </label>
+        <input type="text" th:field="*{username}" id="username"/>
+    </div>
+    <br/>
+    <div class="field">
+        <label for="email">Enter lastname: </label>
+        <input type="text" th:field="*{email}" id="email"/>
+    </div>
+    <br/>
+    <div class="field">
+        <label for="password">Enter password: </label>
+        <input type="text" th:field="*{password}" id="password"/>
+    </div>
+    <br/>
+    <div>
+        <input type="checkbox" id="admin" th:name="roleAdmin" th:value="1">
+        <label for="admin">Admin</label><br>
+        <input type="checkbox" id="user" th:name="roleUser" th:value="2">
+        <label for="user">User</label><br>
+    </div>
+    <br/>
+    <input type="submit" value="Create!"/>
+</form>
+</body>
+</html>

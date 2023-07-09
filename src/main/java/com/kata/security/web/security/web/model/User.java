@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,5 +27,29 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public String formatedRoles() {
+        Collection<Role> userRoles = this.getRoles();
+        if (userRoles.size() == 0) {
+            return "NO ROLES";
+        }
+        return userRoles.toString().replaceAll("^\\[|\\]$", "");
+    }
+
+
+    public boolean isAdmin() {
+        Collection<Role> userRoles = this.getRoles();
+        return userRoles.stream().anyMatch(s -> s.getName().contains("ROLE_ADMIN"));
+    }
+
+
+    public boolean isUser() {
+        Collection<Role> userRoles = this.getRoles();
+        return userRoles.stream().anyMatch(s -> s.getName().contains("ROLE_USER"));
+    }
 
 }
