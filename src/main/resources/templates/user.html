@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table {
+            width: 300px;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        td {
+            text-align: center;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+    <title>Users</title>
+</head>
+<body>
+<h1 class="text-center">Users</h1>
+<table border="1">
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>Lastname</td>
+        <td>Roles</td>
+
+    </tr>
+    <tr>
+        <td><p th:text="${user.getUsername()}">user</p></td>
+        <td><p th:text="${user.getEmail()}">user</p></td>
+        <td><p th:text="${user.formatedRoles()}">user</p></td>
+    </tr>
+    </tbody>
+
+</table>
+<br/>
+<center>
+   <button><a th:href="@{/logout}">Logout</a></button>
+</center>
+</body>
+</html>

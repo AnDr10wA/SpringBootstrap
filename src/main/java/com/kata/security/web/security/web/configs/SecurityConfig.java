@@ -1,7 +1,7 @@
 package com.kata.security.web.security.web.configs;
 
 
-import com.kata.security.web.security.web.services.UserDetailServiceImpl;
+import com.kata.security.web.security.web.services.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -14,12 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserDetailServiceImpl userDetailServiceImpl;
+    private MyUserDetailsService myUserDetailsService;
 
 
     @Autowired
-    public void setUserService(UserDetailServiceImpl userDetailServiceImpl) {
-        this.userDetailServiceImpl = userDetailServiceImpl;
+    public void setUserService(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userDetailServiceImpl);
+        authenticationProvider.setUserDetailsService(myUserDetailsService);
 
         return authenticationProvider;
     }

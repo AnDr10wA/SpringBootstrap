@@ -24,12 +24,19 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/adminn")
     public String adminPage(ModelMap model) {
         List<User> usersList;
         usersList = userService.findAll();
         model.addAttribute("usersList", usersList);
         return "admin";
+    }
+    @GetMapping("/admin")
+    public String adminka(ModelMap model) {
+        List<User> usersList;
+        usersList = userService.findAll();
+        model.addAttribute("usersList", usersList);
+        return "adminpanel";
     }
 
     @GetMapping("/admin/new")
