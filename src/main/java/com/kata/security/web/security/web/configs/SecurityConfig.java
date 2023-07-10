@@ -8,18 +8,26 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private MyUserDetailsService myUserDetailsService;
 
+    private final LoginSuccessHandler loginSuccessHandler;
+
+
+    private UserDetailsService userDetailsService;
+
+    public SecurityConfig(LoginSuccessHandler loginSuccessHandler) {
+        this.loginSuccessHandler = loginSuccessHandler;
+    }
 
     @Autowired
     public void setUserService(MyUserDetailsService myUserDetailsService) {
-        this.myUserDetailsService = myUserDetailsService;
+        this.userDetailsService = myUserDetailsService;
     }
 
     @Override
@@ -28,7 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN")
                 .antMatchers("/profile/**").authenticated()
-                .and().formLogin();
+                .and().formLogin().successHandler(loginSuccessHandler)
+                .and()
+                .logout().logoutSuccessUrl("/login")
+                .permitAll();
     }
 
     @Bean
@@ -40,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(myUserDetailsService);
+        authenticationProvider.setUserDetailsService(userDetailsService);
 
         return authenticationProvider;
     }

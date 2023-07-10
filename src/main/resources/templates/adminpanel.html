@@ -95,8 +95,8 @@
             <td><p th:text="${user.getEmail()}">user</p></td>
             <td><p th:text="${user.formatedRoles()}">user</p></td>
             <td><a th:href="@{admin/update/{id}(id=${user.id})}">Edit</a></td>
-            <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
-
+<!--            <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>-->
+            <td> <button type="button" class="btn btn-danger" ><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a> </button></td>
             </form></td>
           </tr>
           <button><a th:href="@{/admin/new}">Add new user</a></button> or <button><a th:href="@{/logout}">Logout</a></button>

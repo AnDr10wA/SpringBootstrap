@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -18,16 +20,20 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
 
-    @Autowired
+
     private UserRepository userRepository;
 
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()){
+            throw new UsernameNotFoundException("User not found");
         }
-        return new MyUserDetails(user);
+        return new MyUserDetails(user.get());
     }
 
 }
