@@ -2,7 +2,6 @@ package com.kata.security.web.security.web.services;
 
 import com.kata.security.web.security.web.model.Role;
 import com.kata.security.web.security.web.model.User;
-
 import java.util.Collection;
 import java.util.List;
 

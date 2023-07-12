@@ -43,10 +43,10 @@
 
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Admin panel</a>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
+      <a class="nav-link" href="/logout">Logout</a>
     </li>
   </ul>
 </nav>
@@ -68,12 +68,6 @@
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Kata Academy</h1>
-
-      </div>
-
-
 
       <h2>Users</h2>
       <div class="table-responsive">
@@ -99,14 +93,142 @@
             <td> <button type="button" class="btn btn-danger" ><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a> </button></td>
             </form></td>
           </tr>
-          <button><a th:href="@{/admin/new}">Add new user</a></button> or <button><a th:href="@{/logout}">Logout</a></button>
+<!--          <a th:href="@{/admin/new}">Add new user</a>-->
+<!--          <button type="button" class="btn btn-primary" data-toggle="modal" th:data-target="${'#newUserModal'+user.id}" data-whatever="@fat">Add User</button>-->
+          <button class="btn btn-outline-success" data-toggle="modal" data-target = "#newUserModal">Add User</button>
           </tbody>
         </table>
       </div>
+
     </main>
   </div>
 </div>
+<div class="tab-pane fade" id="newUser" role="tabpanel" aria-labelledby="nav-profile-tab">
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Add new user</span>
+    </div>
+  </nav>
+  <form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+    <div class="field">
+      <h5 style="padding-top: 15px; text-align: center">Name</h5>
+      <input th:field="*{username}" class="form-control" type="text"
+             aria-label="default input example" style="width: 40%; margin: auto"/>
+    </div>
+    <br/>
+    <div class="field">
+      <h5 style="padding-top: 15px; text-align: center">Lastname</h5>
+      <input th:field="*{email}" class="form-control" type="text"
+             aria-label="default input example" style="width: 40%; margin: auto"/>
+    </div>
+    <br/>
 
+    <div class="field">
+      <h5 style="padding-top: 15px; text-align: center">Password</h5>
+      <input th:field="*{password}" class="form-control rounded-right" type="password"
+             aria-label="default input example" style="width: 40%; margin: auto"/>
+    </div>
+    <br/>
+    <h5 style="padding-top: 15px; text-align: center">Role</h5>
+    <div class="field" style="text-align: center">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+               value="option1" th:name="roleAdmin" th:value="1">
+        <label class="form-check-label" for="inlineCheckbox1">Admin</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+               value="option2" th:name="roleUser" th:value="2">
+        <label class="form-check-label" for="inlineCheckbox2">User</label>
+      </div>
+    </div>
+
+    <div style="padding-top: 15px; padding-bottom: 15px; text-align: center"><input
+            type="submit" value="Add new user"
+            class="btn btn-success"
+            style="text-align: center"/>
+    </div>
+
+  </form>
+</div>
+<!-- Modal edit user-->
+
+<div class="modal fade" th:id="${'edituser'+user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+          <div class="form-group">
+            <label for="username" class="col-form-label">Username:</label>
+            <input type="text" class="form-control" th:field="*{username}" id="username">
+          </div>
+          <div class="form-group">
+            <label for="password" class="col-form-label">password:</label>
+            <input type="text" class="form-control" th:field="*{password}" id="password">
+          </div>
+          <div class="form-group">
+            <label for="email" class="col-form-label">email:</label>
+            <input type="text" class="form-control" th:field="*{email}" id="email">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class = "modal fade" id= "newUserModal" tabindex="-1" aria-labelledby="newUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newUserModalLabel" >New User</h5>
+        <button class="btn-close" data-dismiss = "modal" aria-label="close"></button>
+        <div class="modal-body">
+          <form th:method="POST" th:action="@{/admin}" th:object="${newUser}">
+            <div class="form-group">
+              <label for="username" class="col-form-label">Username:</label>
+              <input type="text" class="form-control" th:field="*{username}">
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-form-label">password:</label>
+              <input type="text" class="form-control" th:field="*{password}">
+            </div>
+            <div class="form-group">
+              <label for="email" class="col-form-label">email:</label>
+              <input type="text" class="form-control" th:field="*{email}">
+            </div>
+            <br/>
+            <div>
+              <input type="checkbox" id="admin" th:name="roleAdmin" th:value="1">
+              <label for="admin">Admin</label><br>
+              <input type="checkbox" id="user" th:name="roleUser" th:value="2">
+              <label for="user">User</label><br>
+            </div>
+            <br/>
+            <input type="submit" value="Create!"/>
+          </form>
+        </div>
+        <div class="model-foter">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="/docs/4.3.1/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="/docs/4.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.9.0/feather.min.js"></script>
