@@ -52,12 +52,6 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("admin/update/{id}")
-//    public String edit(ModelMap model, @PathVariable("id") Long id) {
-//        model.addAttribute("user", userService.findById(id));
-//        return "edit";
-//    }
-
     @PostMapping("/admin/update")
     public String update(@ModelAttribute("user") User user,
                          @ModelAttribute("roleAdmin") String roleAdmin,

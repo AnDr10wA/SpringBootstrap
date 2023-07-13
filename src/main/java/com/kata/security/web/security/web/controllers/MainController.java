@@ -25,14 +25,7 @@ public class MainController   {
     public String homePage(){
         return "Welcom to home page";
     }
-//    @GetMapping("/user")
-//    public String pageForAuthenticatedUsers(Principal principal){
-//        User user = myUserDetailsService.findByUsername(principal.getName());
-//
-//
-//        return "Username:  " + user.getUsername() + "</br>" + "Email : " +user.getEmail()+
-//                "   " + "<a href='/logout'>Logout</a>";
-//    }
+
 
 
 
